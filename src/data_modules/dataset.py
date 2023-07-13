@@ -8,6 +8,7 @@ from torch.utils.data import Dataset
 from sklearn.preprocessing import LabelEncoder
 import torch.nn.functional as F
 
+# augmentation for QA sequences
 class Augment:
     def __init__(self, args, shuffle=True, ratio=0.3, qa=True, etc=True, mode='train'):
 
@@ -38,12 +39,14 @@ class Augment:
         keep_idx = range(len(x))
         
         if self.mode == 'train':
+            # shuffle sequences
             if self.shuffle:
                 x_idx = [i for i in range(len(x))]
                 random.shuffle(x_idx)
                 x = [x[i] for i in x_idx]
                 y = [y[i] for i in x_idx]
             
+            # drop sequences
             keep_num = int(len(x) * (1 - self.ratio))
             keep_idx = sorted(random.sample(range(len(x)), keep_num))
             x = [x[i] for i in keep_idx]
