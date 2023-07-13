@@ -1,0 +1,8 @@
+# model weight
+*.bin
+
+# data fold
+*/data/
+
+# etc
+__pycache__/
