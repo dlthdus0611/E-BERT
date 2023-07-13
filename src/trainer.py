@@ -88,6 +88,7 @@ class Trainer():
 
         return scheduler, optimizer
 
+    # for outer fold of nested CV
     def outer_loop(self):
 
         test_results = []
@@ -113,6 +114,7 @@ class Trainer():
             self.run[f'mean_test f1'].append(t_f1)
             self.run[f'mean_test mcc'].append(t_mcc)
 
+    # for inner fold of nested CV
     def inner_loop(self, out_fold, df_train, test_loader):
 
         tr_uni = df_train.drop_duplicates(subset=['uni_id']).reset_index(drop=True)
