@@ -239,7 +239,6 @@ class Layer(nn.Module):
         self.chunk_size_feed_forward = config.chunk_size_feed_forward
         self.seq_len_dim = 1
         self.attention = Attention(config)
-        self.is_decoder = config.is_decoder
         self.intermediate = BertIntermediate(config)
         self.output = BertOutput(config)
 
