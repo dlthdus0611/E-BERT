@@ -11,8 +11,8 @@ class E_BERT(BertPreTrainedModel):
 
         self.config = config
 
-        self.embeddings = E_BertEmbeddings(config)
-        self.encoder = E_BertEncoder(config)
+        self.embeddings = Embeddings(config)
+        self.encoder = Encoder(config)
         self.pooler = Pooler(self.config)
         self.dropout = nn.Dropout(0.1)
         self.classifier = nn.Linear(self.config.hidden_size, self.config.num_labels)
@@ -78,7 +78,7 @@ class Pooler(nn.Module):
         pooled_output = self.activation(pooled_output)
         return pooled_output
     
-class E_BertEmbeddings(nn.Module):
+class Embeddings(nn.Module):
     def __init__(self, config):
         super().__init__()
 
@@ -117,7 +117,7 @@ class E_BertEmbeddings(nn.Module):
         
         return embeddings
     
-class E_BertSelfAttention(nn.Module):
+class SelfAttention(nn.Module):
     def __init__(self, config):
         super().__init__()
 
@@ -181,7 +181,7 @@ class E_BertSelfAttention(nn.Module):
 
         return outputs
     
-class Gate_layer(nn.Module):
+class GateLayer(nn.Module):
     def __init__(self, config):
         super().__init__()
 
@@ -201,13 +201,13 @@ class Gate_layer(nn.Module):
 
         return scores.squeeze(-1)
     
-class E_BertEncoder(nn.Module):
+class Encoder(nn.Module):
     def __init__(self, config):
         super().__init__()
 
         self.config = config
-        self.layer = nn.ModuleList([E_BertLayer(config) for _ in range(config.num_hidden_layers)])
-        self.gate = nn.ModuleList([Gate_layer(config) for _ in range(config.num_hidden_layers)])
+        self.layer = nn.ModuleList([Layer(config) for _ in range(config.num_hidden_layers)])
+        self.gate = nn.ModuleList([GateLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(
         self,
@@ -232,13 +232,13 @@ class E_BertEncoder(nn.Module):
 
         return hidden_states
 
-class E_BertLayer(nn.Module):
+class Layer(nn.Module):
     def __init__(self, config):
         super().__init__()
 
         self.chunk_size_feed_forward = config.chunk_size_feed_forward
         self.seq_len_dim = 1
-        self.attention = E_BertAttention(config)
+        self.attention = Attention(config)
         self.is_decoder = config.is_decoder
         self.intermediate = BertIntermediate(config)
         self.output = BertOutput(config)
@@ -272,11 +272,11 @@ class E_BertLayer(nn.Module):
 
         return layer_output
 
-class E_BertAttention(nn.Module):
+class Attention(nn.Module):
     def __init__(self, config):
         super().__init__()
         
-        self.self = E_BertSelfAttention(config)
+        self.self = SelfAttention(config)
         self.output = BertSelfOutput(config)
         self.pruned_heads = set()
 

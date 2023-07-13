@@ -9,7 +9,6 @@ def getConfig():
 
     # model
     parser.add_argument('--lr', default=3e-5, type=float)
-    parser.add_argument('--arch', default='bert', type=str)
     parser.add_argument('--epochs', default=70, type=int)
     parser.add_argument('--max_len', default=512, type=int)
     parser.add_argument('--batch_size', default=8, type=int)
@@ -24,12 +23,8 @@ def getConfig():
     parser.add_argument('--ids_entity', default='ids_entity_0207', type=str)
 
     # Data settings
-    parser.add_argument('--data', default='channel', type=str)
     parser.add_argument('--ratio', default=0.3, type=float)
     parser.add_argument('--ner_results', default=False, type=bool)
-
-    # save model
-    parser.add_argument('--save_date', default=None, type=str)
 
     ## Scheduler
     parser.add_argument('--scheduler', type=str, default='cos')

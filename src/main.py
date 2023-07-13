@@ -2,8 +2,9 @@ import os
 import pprint
 import neptune
 import warnings
+
+from train import Trainer
 from utils import fix_seed
-from trainer import Trainer
 from config import getConfig
 
 warnings.filterwarnings('ignore')
@@ -25,7 +26,7 @@ def main(args):
     else:
         run = None
         exp_num = args.exp_num
-        
+
     save_path = os.path.join(args.model_path, exp_num)
 
     # Create model directory

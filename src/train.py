@@ -14,11 +14,11 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import matthews_corrcoef, precision_recall_fscore_support
 from transformers.optimization import get_cosine_schedule_with_warmup, get_linear_schedule_with_warmup
 
-from utils import fix_seed
+from utils import *
 from data_modules.dataloader import *
 from model.load_model import get_model, get_tokenizer
 
-class Trainer():
+class Trainer:
     def __init__(self, args, save_path, run):
         super(Trainer, self).__init__()
 
