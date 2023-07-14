@@ -9,7 +9,7 @@ def get_model():
     model_config.num_labels = 4
     model_config.problem_type = 'single_label_classification'
     base_model = E_BERT.from_pretrained('model/kmbert_vocab/pytorch_model.bin',
-                                        config=model_config, add_pooling_layer=True)
+                                        config=model_config)
     
     return base_model
 
