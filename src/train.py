@@ -54,7 +54,7 @@ class Trainer:
         kf = StratifiedKFold(n_splits=self.args.Kfold, shuffle=True, random_state=self.args.seed)
         for fold, (train_idx, test_idx) in enumerate(kf.split(df_uni, df_uni['진료과1'])):
             df_uni.loc[test_idx, 'fold'] = fold
-        
+
         # Tokenizer & Network 
         self.tokenizer = get_tokenizer()
 
@@ -276,7 +276,7 @@ class Trainer:
                                 token_type_ids = token_type_ids,
                                 local_attention_mask = local_attn_mask
                                 )
-                
+
                 preds = F.softmax(output, dim=1)
                 loss = self.criterion(output, labels)
 
